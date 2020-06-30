@@ -10,7 +10,6 @@ gem 'webpacker', '~> 4.0'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 gem 'rubocop'
-
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
@@ -19,6 +18,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'brakeman'
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
