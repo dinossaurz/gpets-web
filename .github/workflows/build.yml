@@ -16,21 +16,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: gpets_web_test
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.6.3 
+        ruby-version: 2.6.3
     - name: Setup Node.js environment
       uses: actions/setup-node@v2.1.0
       with:
         node-version: 12.18
-    - name: Setup PostgreSQL
-      uses: Harmon758/postgresql-action@v1.0.0
-      with:
-        postgresql version: 11
     - uses: actions/cache@v2
       with:
         path: vendor/bundle
