@@ -62,5 +62,8 @@ jobs:
       run: |
         npm install -g yarn@1.22.4
         yarn install --pure-lockfile
+    - name: Copy config files
+      run: |
+        cp .github/config/database.yml config/database.yml
     - name: Run tests
       run: bundle exec rspec spec
