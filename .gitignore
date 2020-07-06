@@ -23,6 +23,8 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
+# Ignore file to ensure that coverage results are not tracked by Git
+coverage/*
 /public/packs
 /public/packs-test
 /node_modules

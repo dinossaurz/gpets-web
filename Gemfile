@@ -13,6 +13,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'devise'
 
 group :development, :test do
+  gem 'simplecov', require: false
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'capybara'
