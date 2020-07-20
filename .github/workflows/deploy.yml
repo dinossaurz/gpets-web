@@ -17,7 +17,7 @@ jobs:
           docker-compose build web
           docker push docker.pkg.github.com/dinossaurz/gpets-web/gpets-web:latest
         env:
-          GPETS_SECRET_KEY_BASE: ${{ secrets.RAILS_MASTER_KEY }}
+          GPETS_SECRET_KEY_BASE: ${{ secrets.GPETS_SECRET_KEY_BASE }}
 
       - name: Trigger deploy
         uses: Consensys/kubernetes-action@master
