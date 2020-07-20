@@ -18,10 +18,9 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: docker.pkg.github.com
-          image_name: docker.pkg.github.com/dinossaurz/gpets-web/gpets-web
+          image_name: dinossaurz/gpets-web/gpets-web
           image_tag: latest
           dockerfile: app.dockerfile
-          build_extra_args: "--build-arg=RAILS_MASTER_KEY=${{ secrets.GPETS_SECRET_KEY_BASE }}"
 
       - name: Push Image
         run: docker push docker.pkg.github.com/dinossaurz/gpets-web/gpets-web:latest
