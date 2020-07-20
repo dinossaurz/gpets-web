@@ -2,18 +2,37 @@ version: '3'
 
 services:
   web:
-    build: .
-    command: bash -c "yarn install && bundle install && rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    build:
+      dockerfile: ./app.dockerfile
+      context: .
+    container_name: gpets-web
+    image: docker.pkg.github.com/renanmaringolo/gpets-web/gpets-web
     working_dir: /gpets-web
-    volumes:
-      - ./:/gpets-web
     ports:
       - "3000:3000"
+    command: >
+      bash -c "yarn install && bundle install && rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - ./:/gpets-web
+    environment:
+      RAILS_ENV: development
+      RAILS_MASTER_KEY: ${GPETS_SECRET_KEY_BASE}
+      SECRET_KEY_BASE: ${GPETS_SECRET_KEY_BASE}
     depends_on:
       - db
+    networks:
+      - custom-network
   db:
     image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
+    networks:
+      - custom-network
+networks:
+  custom-network:
+    driver: bridge

@@ -16,9 +16,6 @@
 #
 default: &default
   adapter: postgresql
-  host: db
-  username: postgres
-  password: password
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
@@ -27,6 +24,9 @@ default: &default
 development:
   <<: *default
   database: gpets_web_development
+  host: db
+  username: postgres
+  password: password
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -83,6 +83,7 @@ test:
 #
 production:
   <<: *default
-  database: gpets_web_production
-  username: gpets_web
+  host: gpets-db-service
+  database: gpets
+  username: gpets
   password: <%= ENV['GPETS_WEB_DATABASE_PASSWORD'] %>

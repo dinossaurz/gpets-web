@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo 'Building image...'
+docker-compose build web
+
+echo 'Publishing...'
+docker push docker.pkg.github.com/renanmaringolo/gpets-web/gpets-web:latest
+
+echo 'Rolling deploy...'
+kubectl delete pods -l app=gpets-web
+#kubectl rollout restart deployment gpets-web

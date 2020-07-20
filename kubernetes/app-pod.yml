@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gpets-web
+  labels:
+    app: gpets-web
+spec:
+  selector:
+    matchLabels:
+      app: gpets-web
+  template:
+    metadata:
+      labels:
+        app: gpets-web
+    spec:
+      imagePullSecrets:
+        - name: gpets-docker-secret
+      containers:
+        - name: gpets-web
+          image: docker.pkg.github.com/renanmaringolo/gpets-web:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PG_HOST
+              value: gpets-db-service
+            - name: GPETS_WEB_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: gpets-db-password-secret
+                  key: password
+            - name: RAILS_LOG_TO_STDOUT
+              value: 'true'
+            - name: RAILS_ENV
+              value: production
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: rails-secrets
+                  key: rails_master_key

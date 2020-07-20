@@ -11,10 +11,12 @@ COPY Gemfile /gpets-web/Gemfile
 COPY Gemfile.lock /gpets-web/Gemfile.lock
 RUN bundle install
 COPY . /gpets-web
+RUN RAILS_ENV=production bundle exec rake assets:precompile --trace
 
 COPY entrypoint.sh /usr/bin
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
-EXPOSE 3000:3000
+
+EXPOSE 3000
 
 CMD ["rails", "server", "-b", "0.0.0.0"]
