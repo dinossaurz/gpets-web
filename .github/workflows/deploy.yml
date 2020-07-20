@@ -19,6 +19,7 @@ jobs:
         env:
           GPETS_SECRET_KEY_BASE: ${{ secrets.GPETS_SECRET_KEY_BASE }}
           RAILS_MASTER_KEY: ${{ secrets.GPETS_SECRET_KEY_BASE }}
+          SECRET_KEY_BASE: ${{ secrets.GPETS_SECRET_KEY_BASE }}
 
       - name: Trigger deploy
         uses: Consensys/kubernetes-action@master
