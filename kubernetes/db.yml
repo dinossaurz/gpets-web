@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: gpets-statefulset
+  labels:
+    app: gpets-db
+spec:
+  selector:
+    matchLabels:
+      app: gpets-db
+  serviceName: gpets-db-service
+  template:
+    metadata:
+      labels:
+        app: gpets-db
+    spec:
+      imagePullSecrets:
+        - name: gpets-docker-secret
+      containers:
+        - name: gpets-db
+          image: postgres
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: gpets
+            - name: POSTGRES_DB
+              value: gpets
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: gpets-db-password-secret
+                  key: password
+          volumeMounts:
+            - name: volume-postgres
+              mountPath: /var/lib/postgres
+      volumes:
+        - name: volume-postgres
+          persistentVolumeClaim:
+            claimName: volume-postgres-config
