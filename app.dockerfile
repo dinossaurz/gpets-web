@@ -9,9 +9,10 @@ COPY yarn.lock /gpets-web/yarn.lock
 RUN yarn install --production
 COPY Gemfile /gpets-web/Gemfile
 COPY Gemfile.lock /gpets-web/Gemfile.lock
-RUN bundle install
+RUN bundle config path vendor/bundle
+RUN bundle install --jobs 4 --retry 3
 COPY . /gpets-web
-RUN RAILS_MASTER_KEY=${GPETS_SECRET_KEY_BASE} RAILS_ENV=production bundle exec rake assets:precompile --trace
+RUN SECRET_KEY_BASE=1 RAILS_ENV=production bundle exec rake assets:precompile --trace
 
 COPY entrypoint.sh /usr/bin
 RUN chmod +x /usr/bin/entrypoint.sh
