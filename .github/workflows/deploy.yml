@@ -12,18 +12,10 @@ jobs:
       - name: Login to the Github Registry
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin docker.pkg.github.com
 
-      - name: Build Image
-        uses: whoan/docker-build-with-cache-action@v5
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          registry: docker.pkg.github.com
-          image_name: dinossaurz/gpets-web/gpets-web
-          image_tag: latest
-          dockerfile: app.dockerfile
-
-      - name: Push Image
-        run: docker push docker.pkg.github.com/dinossaurz/gpets-web/gpets-web:latest
+      - name: Build & Push Image
+        run: |
+          docker-compose build web
+          docker push docker.pkg.github.com/dinossaurz/gpets-web/gpets-web:latest
         env:
           GPETS_SECRET_KEY_BASE: ${{ secrets.GPETS_SECRET_KEY_BASE }}
           RAILS_MASTER_KEY: ${{ secrets.GPETS_SECRET_KEY_BASE }}
