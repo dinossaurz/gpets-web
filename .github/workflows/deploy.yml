@@ -10,14 +10,12 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Login to the Github Registry
-        with:
-          run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
       - name: Build & Push Image
-        with:
-          run: |
-            docker-compose build web
-            docker push docker.pkg.github.com/dinossaurz/gpets-web/gpets-web:latest
+        run: |
+          docker-compose build web
+          docker push docker.pkg.github.com/dinossaurz/gpets-web/gpets-web:latest
 
       - name: Trigger deploy
         uses: Consensys/kubernetes-action@master
