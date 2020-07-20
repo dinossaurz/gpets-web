@@ -4,7 +4,7 @@ echo 'Building image...'
 docker-compose build web
 
 echo 'Publishing...'
-docker push docker.pkg.github.com/renanmaringolo/gpets-web/gpets-web:latest
+docker push docker.pkg.github.com/dinossaurz/gpets-web/gpets-web:latest
 
 echo 'Rolling deploy...'
 kubectl delete pods -l app=gpets-web
