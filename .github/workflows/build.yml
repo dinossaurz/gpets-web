@@ -68,7 +68,9 @@ jobs:
     - name: Run tests
       id: tests
       continue-on-error: true
-      run: bundle exec rspec spec
+      run: |
+        bundle exec rspec spec
+        echo ::set-output name=status::success
 
     - name: Success notification
       if: steps.tests.output.status == 'success'
@@ -83,7 +85,7 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
     - name: Failure notification
-      if: steps.tests.output.status == 'failure'
+      if: steps.tests.output.status != 'success'
       uses: rtCamp/action-slack-notify@master
       env:
         SLACK_CHANNEL: general
