@@ -27,11 +27,10 @@ jobs:
         if: contains(github.event.review.body, 'staging please')
         run: |
           DOCKER_BUILDKIT=1 docker build \
-            -f ./app.dockerfile\
-            --cache-from $CACHE_IMAGE:latest \
-            --tag $CACHE_IMAGE:latest \
-            --build-arg BUILDKIT_INLINE_CACHE=1\
-            .
+            -f ./app.dockerfile \
+            --cache-from docker.pkg.github.com/dinossaurz/gpets-web/gpets-web:latest \
+            --tag docker.pkg.github.com/dinossaurz/gpets-web/gpets-web:latest \
+            --build-arg BUILDKIT_INLINE_CACHE=1 .
         env:
           GPETS_SECRET_KEY_BASE: ${{ secrets.GPETS_SECRET_KEY_BASE }}
           RAILS_MASTER_KEY: ${{ secrets.GPETS_SECRET_KEY_BASE }}
