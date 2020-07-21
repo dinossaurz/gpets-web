@@ -68,8 +68,10 @@ jobs:
     - name: Run tests
       id: tests
       continue-on-error: true
-      run: bundle exec rspec spec
-      run: ::set-output name=status::success
+      run: |
+        bundle exec rspec spec
+        echo "Yay!"
+        echo ::set-output name=status::success
 
     - name: Success notification
       if: steps.tests.output.status == 'success'
