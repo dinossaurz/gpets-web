@@ -1,0 +1,20 @@
+#!/bin/bash
+
+kubectl apply -f kubernetes/production/namespace.yml
+kubectl apply -f kubernetes/production/tls-cert.yml -n production
+kubectl apply -f kubernetes/production/nginx-ingress.yml -n production
+
+kubectl apply -f kubernetes/common/config-map.yml -n production
+kubectl apply -f kubernetes/common/db-volume-claim.yml -n production
+kubectl apply -f kubernetes/common/db.yml -n production
+kubectl apply -f kubernetes/common/db-service.yml -n production
+kubectl apply -f kubernetes/common/app-pod.yml -n production
+kubectl apply -f kubernetes/common/app-service.yml -n production
+
+kubectl apply -f kubernetes/secrets/default-token-mxjml.yml -n production
+kubectl apply -f kubernetes/secrets/gpets-db-password-secret.yml -n production
+kubectl apply -f kubernetes/secrets/gpets-release-ingress-nginx-admission.yml -n production
+kubectl apply -f kubernetes/secrets/gpets-docker-secret.yml -n production
+kubectl apply -f kubernetes/secrets/gpets-release-ingress-nginx-token-fdclv.yml -n production
+kubectl apply -f kubernetes/secrets/gpets-tls-secret.yml -n production
+kubectl apply -f kubernetes/secrets/rails-secrets.yml -n production

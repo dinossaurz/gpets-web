@@ -31,7 +31,7 @@ spec:
             - name: RAILS_LOG_TO_STDOUT
               value: 'true'
             - name: RAILS_ENV
-              value: production
+              value: 'production'
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
