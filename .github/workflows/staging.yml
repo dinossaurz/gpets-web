@@ -9,7 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: FOMPILA
-        run: echo "${{ github.event.body }}"
+        run: echo "${{ github.event.review.body }}"
+      - name: FOMPILA 2
+        run: echo "${{ github.event.pull_request.body }}"
+      - name: FOMPILA 3
+        run: echo "${{ github.event.pull_request.url }}"
+      - name: FOMPILA 4
+        run: echo "${{ github.event.review.id }}"
 
       - uses: actions/checkout@v2
         if: contains(github.event.pull_request.review_comment.body, 'staging please')
