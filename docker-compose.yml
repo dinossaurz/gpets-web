@@ -6,7 +6,7 @@ services:
       dockerfile: ./app.dockerfile
       context: .
       cache_from:
-        - "docker.pkg.github.com/dinossaurz/gpets-web/gpets-web"
+        - docker.pkg.github.com/dinossaurz/gpets-web/gpets-web
     container_name: gpets-web
     image: docker.pkg.github.com/dinossaurz/gpets-web/gpets-web
     working_dir: /gpets-web

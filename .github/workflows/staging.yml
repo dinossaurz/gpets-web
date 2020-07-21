@@ -17,17 +17,28 @@ jobs:
 
       - name: Login to the Github Registry
         if: contains(github.event.review.body, 'staging please')
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin docker.pkg.github.com
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login \
+            --username ${{ secrets.DOCKER_USERNAME }} \
+            --password-stdin docker.pkg.github.com
 
-      - name: Build & Push Image
+      - name: Build Image
         if: contains(github.event.review.body, 'staging please')
         run: |
-          docker-compose build web
-          docker push docker.pkg.github.com/dinossaurz/gpets-web/gpets-web:latest
+          docker build \
+            -f ./app.dockerfile\
+            --cache-from $CACHE_IMAGE:latest \
+            --tag $CACHE_IMAGE:latest \
+            --build-arg BUILDKIT_INLINE_CACHE=1\
+            "."
         env:
           GPETS_SECRET_KEY_BASE: ${{ secrets.GPETS_SECRET_KEY_BASE }}
           RAILS_MASTER_KEY: ${{ secrets.GPETS_SECRET_KEY_BASE }}
           SECRET_KEY_BASE: ${{ secrets.GPETS_SECRET_KEY_BASE }}
+
+      - name: Push Image
+        if: contains(github.event.review.body, 'staging please')
+        run: docker push $CACHE_IMAGE:latest
 
       - name: Staging Deploy
         if: contains(github.event.review.body, 'staging please')
