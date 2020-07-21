@@ -27,4 +27,4 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: delete pod -l app=gpets-web -n staging
+          args: rollout restart deploy gpets-web -n staging
