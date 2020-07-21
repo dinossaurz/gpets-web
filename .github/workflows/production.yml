@@ -16,3 +16,14 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           args: rollout restart deploy gpets-web -n production
+
+      - name: Slack notification
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_CHANNEL: general
+          SLACK_MESSAGE: 'Finished'
+          SLACK_TITLE: 'Deploy to Production'
+          SLACK_USERNAME: 'Botsauro'
+          SLACK_ICON: https://github.com/rtCamp.png?size=48
+          SLACK_COLOR: '#F0E68C'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
