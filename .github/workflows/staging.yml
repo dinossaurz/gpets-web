@@ -1,15 +1,15 @@
 name: Deploy to Staging
 
 on:
-  pull_request_review:
-    types: [submitted,edited]
+  pull_request_review_comment:
+    types: [created,edited]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: FOMPILA
-        run: echo "${{ github.event.review_comment.body }}"
+        run: echo "${{ github.event.comment.body }}"
 
       - uses: actions/checkout@v2
         if: contains(github.event.comment.body, 'staging please')
