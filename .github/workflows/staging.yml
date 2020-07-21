@@ -1,8 +1,8 @@
-name: Deploy
+name: Deploy to Staging
 
 on:
-  push:
-    branches: [ master ]
+  release:
+    types: [created]
 
 jobs:
   deploy:
@@ -22,9 +22,9 @@ jobs:
           RAILS_MASTER_KEY: ${{ secrets.GPETS_SECRET_KEY_BASE }}
           SECRET_KEY_BASE: ${{ secrets.GPETS_SECRET_KEY_BASE }}
 
-      - name: Trigger deploy
+      - name: Staging Deploy
         uses: Consensys/kubernetes-action@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: delete pod -l app=gpets-web
+          args: delete pod -l app=gpets-web -n staging
