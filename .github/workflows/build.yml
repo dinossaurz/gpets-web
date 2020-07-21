@@ -66,30 +66,15 @@ jobs:
       run: |
         cp .github/config/database.yml config/database.yml
     - name: Run tests
-      id: tests
-      continue-on-error: true
       run: bundle exec rspec spec
 
-    - name: Success notification
-      if: ${{ success() }}
+    - name: Slack notification
       uses: rtCamp/action-slack-notify@master
       env:
         SLACK_CHANNEL: general
-        SLACK_MESSAGE: 'Passed!'
+        SLACK_MESSAGE: 'Build Finished'
         SLACK_TITLE: 'Build & Tests'
         SLACK_USERNAME: 'Botsauro'
         SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_COLOR: '#3278BD'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
-    - name: Failure notification
-      if: ${{ failure() }}
-      uses: rtCamp/action-slack-notify@master
-      env:
-        SLACK_CHANNEL: general
-        SLACK_MESSAGE: 'Failed!'
-        SLACK_TITLE: 'Build & Tests'
-        SLACK_USERNAME: 'Botsauro'
-        SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_COLOR: '#FF0000'
+        SLACK_COLOR: '#4682B4'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
