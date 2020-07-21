@@ -9,8 +9,7 @@ COPY yarn.lock /gpets-web/yarn.lock
 RUN yarn install --production
 COPY Gemfile /gpets-web/Gemfile
 COPY Gemfile.lock /gpets-web/Gemfile.lock
-RUN bundle config path vendor/bundle
-RUN bundle install --jobs 4 --retry 3
+RUN bundle install
 COPY . /gpets-web
 RUN SECRET_KEY_BASE=1 RAILS_ENV=production bundle exec rake assets:precompile --trace
 

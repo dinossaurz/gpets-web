@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gpets-web-config-map
+data:
+  PG_HOST: gpets-db-service
+  RAILS_LOG_TO_STDOUT:  'true'
+  RAILS_ENV: 'production'

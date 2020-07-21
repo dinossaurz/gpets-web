@@ -1,5 +1,15 @@
 #!/bin/bash
 
+while [[ "$#" > 0 ]]; do case $1 in
+  -e|--environment) APP_ENV="$2"; shift;;
+  *) echo "Unknown parameter passed: $1"; exit 1;;
+esac; shift; done
+
+if [ -z $APP_ENV ]; then
+  echo "Missing -e option"
+  exit 1
+fi
+
 echo 'Building image...'
 docker-compose build web
 
@@ -7,5 +17,4 @@ echo 'Publishing...'
 docker push docker.pkg.github.com/dinossaurz/gpets-web/gpets-web:latest
 
 echo 'Rolling deploy...'
-kubectl delete pods -l app=gpets-web
-#kubectl rollout restart deployment gpets-web
+kubectl delete pods -l app=gpets-web -n $APP_ENV
