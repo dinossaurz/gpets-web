@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: FOMPILA
-        run: echo "${{ github.event.pull_request.review_comment.comment.body }}"
+        run: echo "${{ github.event.pull_request.review_comment.body }}"
 
       - uses: actions/checkout@v2
-        if: contains(github.event.pull_request.review_comment.comment.body, 'staging please')
+        if: contains(github.event.pull_request.review_comment.body, 'staging please')
 
       - name: Login to the Github Registry
         if: contains(github.event.comment.body, 'staging please')
