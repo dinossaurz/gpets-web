@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: FOMPILA
-        run: echo "${{ github.event.comment }}"
+        run: echo "${{ github.event.body }}"
 
       - uses: actions/checkout@v2
         if: contains(github.event.pull_request.review_comment.body, 'staging please')
