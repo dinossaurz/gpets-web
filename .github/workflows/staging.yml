@@ -10,10 +10,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: khan/pull-request-comment-trigger@master
+        id: check
+        with:
+          trigger: 'staging please'
+
       - name: Login to the Github Registry
+        if: steps.check.outputs.triggered == 'true'
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin docker.pkg.github.com
 
       - name: Build & Push Image
+        if: steps.check.outputs.triggered == 'true'
         run: |
           docker-compose build web
           docker push docker.pkg.github.com/dinossaurz/gpets-web/gpets-web:latest
@@ -23,6 +30,7 @@ jobs:
           SECRET_KEY_BASE: ${{ secrets.GPETS_SECRET_KEY_BASE }}
 
       - name: Staging Deploy
+        if: steps.check.outputs.triggered == 'true'
         uses: Consensys/kubernetes-action@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
@@ -30,6 +38,7 @@ jobs:
           args: rollout restart deploy gpets-web -n staging
 
       - name: Slack notification
+        if: steps.check.outputs.triggered == 'true'
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_CHANNEL: general
