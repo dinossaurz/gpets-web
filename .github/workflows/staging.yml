@@ -5,7 +5,7 @@ on:
     types: [submitted,edited]
 
 env:
-  CACHE_IMAGE: mjhea0/docker-ci-cache
+  CACHE_IMAGE: docker.pkg.github.com/dinossaurz/gpets-web/gpets-web
   DOCKER_BUILDKIT: 1
 
 jobs:
