@@ -26,7 +26,6 @@ jobs:
       - name: Build Image
         if: contains(github.event.review.body, 'staging please')
         run: |
-          docker pull docker.pkg.github.com/dinossaurz/gpets-web/gpets-web:latest
           DOCKER_BUILDKIT=1 docker build \
             -f app.dockerfile \
             --cache-from docker.pkg.github.com/dinossaurz/gpets-web/gpets-web:latest \
