@@ -1,6 +1,8 @@
 name: Deploy to Staging
 
 on:
+  pull_request:
+    branches: [master]
   issue_comment:
     types: [created]
 
@@ -8,16 +10,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
       - uses: khan/pull-request-comment-trigger@master
         id: check
         with:
           trigger: 'staging please'
 
-      - name: Login to the Github Registry
+      - uses: actions/checkout@v2
         if: steps.check.outputs.triggered == 'true'
         continue-on-error: false
+
+      - name: Login to the Github Registry
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin docker.pkg.github.com
 
       - name: Build & Push Image
