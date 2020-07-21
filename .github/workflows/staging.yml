@@ -10,13 +10,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+
       - uses: khan/pull-request-comment-trigger@master
         id: check
         with:
           trigger: 'staging please'
-
-      - uses: actions/checkout@v2
-        if: steps.check.outputs.triggered == 'true'
 
       - name: Login to the Github Registry
         if: steps.check.outputs.triggered == 'true'
