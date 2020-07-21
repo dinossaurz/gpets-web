@@ -27,12 +27,7 @@ jobs:
         if: contains(github.event.review.body, 'staging please')
         run: |
           docker pull $CACHE_IMAGE:latest
-          docker build \
-            -f ./app.dockerfile\
-            --cache-from $CACHE_IMAGE:latest \
-            --tag $CACHE_IMAGE:latest \
-            --build-arg BUILDKIT_INLINE_CACHE=1\
-            "."
+          docker-compose build --build-arg BUILDKIT_INLINE_CACHE=1
         env:
           GPETS_SECRET_KEY_BASE: ${{ secrets.GPETS_SECRET_KEY_BASE }}
           RAILS_MASTER_KEY: ${{ secrets.GPETS_SECRET_KEY_BASE }}
