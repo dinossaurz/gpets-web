@@ -10,7 +10,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-
       - uses: khan/pull-request-comment-trigger@master
         id: check
         with:
