@@ -1,8 +1,7 @@
-<h1>gPets</h1>
+<h1>GPetS - Encontre seu melhor AUmigo</h1>
 
 <% if user_signed_in?  %>
-  Welcome to GPets, <%= current_user.email %>!!
-  <br />
+  <span>Welcome to GPetS, </span><%= current_user.email %>
   <%= link_to 'Sign out', destroy_user_session_path %>
 <% else %>
   <%= link_to 'Sign in', new_user_session_path %>

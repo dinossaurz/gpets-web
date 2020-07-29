@@ -13,7 +13,7 @@ feature 'register user' do
   end
 
   scenario 'sign in' do
-    user = create(:user)
+    user = create(:user, email: 'renan@gmail.com', password: '12345678')
 
     visit root_path
     click_on 'Sign in'
@@ -21,6 +21,7 @@ feature 'register user' do
     fill_in 'Password', with: '12345678'
     click_on 'Log in'
 
+    expect(page).to have_content('Welcome to GPetS, renan@gmail.com')
     expect(page).to_not have_link('Sign in')
   end
 
