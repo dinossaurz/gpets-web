@@ -1,0 +1,29 @@
+<h1>Novo Pet</h1>
+<%= form_for @pet do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :bearing %>
+    <%= f.text_field :bearing %>
+  </div>
+  <div>
+    <%= f.label :gender %>
+    <%= f.text_field :gender %>
+  </div>
+  <div>
+    <%= f.label :pet_type %>
+    <%= f.text_field :pet_type %>
+  </div>
+    <div>
+      <%= f.label(:castrated) %>
+      <%= f.radio_button(:castrated, 'true') %>
+      <%= f.label(:castrated, 'Sim', value: 'true') %>
+      <%= f.radio_button(:castrated, 'false') %>
+      <%= f.label(:castrated, 'Não', value: 'false') %>
+  </div>
+  <div>
+    <%= f.submit 'Cadastrar' %>
+  </div>
+<% end %>
