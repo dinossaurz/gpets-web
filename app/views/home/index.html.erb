@@ -1,6 +1,7 @@
 <h1>GPetS - Encontre seu melhor AUmigo</h1>
 
 <% if user_signed_in?  %>
+  <p><%= link_to 'Cadastrar Pet', new_pet_path %></p>
   <span>Welcome to GPetS, </span><%= current_user.email %>
   <%= link_to 'Sign out', destroy_user_session_path %>
 <% else %>
